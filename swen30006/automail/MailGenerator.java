@@ -9,6 +9,9 @@ import strategies.IMailPool;
  */
 public class MailGenerator {
 
+	private final int MAIL_TO_CREATE_BASE = 
+	  Integer.parseInt(Simulation.properties.getProperty("Mail_to_Create"));
+	
 	public final int MAIL_TO_CREATE;
 	
 	private final int PRIORITY_MAIL_RARITY =
@@ -37,15 +40,15 @@ public class MailGenerator {
 	 * @param seed
 	 *            random seed for generating mail
 	 */
-	public MailGenerator(int mailToCreate, IMailPool mailPool, HashMap<Boolean, Integer> seed) {
+	public MailGenerator(IMailPool mailPool, HashMap<Boolean, Integer> seed) {
 		if (seed.containsKey(true)) {
 			this.random = new Random((long) seed.get(true));
 		} else {
 			this.random = new Random();
 		}
 		// Vary arriving mail by MAIL_COUNT_VARIATION.
-		int variationCap = (int)(mailToCreate * MAIL_COUNT_VARIATION * 2);  // TODO check if that's 
-		MAIL_TO_CREATE = mailToCreate * 4 / 5 + random.nextInt(variationCap);
+		int variationCap = (int)(MAIL_TO_CREATE_BASE * MAIL_COUNT_VARIATION * 2);  // TODO check if this is correct
+		MAIL_TO_CREATE = MAIL_TO_CREATE_BASE * 4 / 5 + random.nextInt(variationCap);
 		// System.out.println("Num Mail Items: "+MAIL_TO_CREATE);
 		mailCreated = 0;
 		complete = false;

@@ -17,8 +17,6 @@ import java.util.Properties;
 public class Simulation {
 
 	/** Constant for the mail generator */
-	// TODO move this into MailGenerator.
-	private static int MAIL_TO_CREATE;
 	private static double DELIVERY_PENALTY;
 
 	// TODO comment this
@@ -42,10 +40,6 @@ public class Simulation {
 			System.exit(1);
 		}
 		
-		// TODO Move this to MailGenerator.
-		// Change the MailGenerator constructor to not take this as an argument.
-		MAIL_TO_CREATE =  
-		  Integer.parseInt(Simulation.properties.getProperty("Mail_to_Create"));
 		DELIVERY_PENALTY = 
 		  Double.parseDouble(Simulation.properties.getProperty("Delivery_Penalty"));
 		
@@ -64,7 +58,7 @@ public class Simulation {
 		}
 		Automail automail = new Automail(new ReportDelivery());
 		// TODO change this constructor.
-		MailGenerator generator = new MailGenerator(MAIL_TO_CREATE, automail.mailPool, seedMap);
+		MailGenerator generator = new MailGenerator(automail.mailPool, seedMap);
 
 		/** Initiate all the mail */
 		generator.generateAllMail();
