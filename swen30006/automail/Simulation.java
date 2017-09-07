@@ -4,7 +4,7 @@ import exceptions.ExcessiveDeliveryException;
 import exceptions.MailAlreadyDeliveredException;
 import strategies.Automail;
 
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException;  // TODO They maybe put this here for a reason.
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,23 +41,22 @@ public class Simulation {
 		}
 		
 		DELIVERY_PENALTY = 
-		  Double.parseDouble(Simulation.properties.getProperty("Delivery_Penalty"));
+		  Double.parseDouble(properties.getProperty("Delivery_Penalty"));
 		
 		MAIL_DELIVERED = new ArrayList<MailItem>();
 
 		/** Used to see whether a seed is initialized or not */
 		HashMap<Boolean, Integer> seedMap = new HashMap<>();
 
-		/** Read the first argument and save it as a seed if it exists */
-		// TODO change this to read the seed from automail.Properties maybe?
-		if (args.length != 0) {
-			int seed = Integer.parseInt(args[0]);
+		/** Read the seed from the properties if it exists */
+		String seedString = properties.getProperty("Seed");
+		if (seedString != null) {
+			int seed = Integer.parseInt(seedString);
 			seedMap.put(true, seed);
 		} else {
 			seedMap.put(false, 0);
 		}
 		Automail automail = new Automail(new ReportDelivery());
-		// TODO change this constructor.
 		MailGenerator generator = new MailGenerator(automail.mailPool, seedMap);
 
 		/** Initiate all the mail */
