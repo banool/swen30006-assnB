@@ -10,6 +10,12 @@ import strategies.IMailPool;
 public class MailGenerator {
 
 	public final int MAIL_TO_CREATE;
+	
+	private final int PRIORITY_MAIL_RARITY =
+	  Integer.parseInt(Simulation.properties.getProperty("Priority_Mail_is_One_in"));
+	// We convert the percentage value into a decimal representation.
+	private final double MAIL_COUNT_VARIATION =
+	  Double.parseDouble(Simulation.properties.getProperty("Mail_Count_Percentage_Variation")) / 100;
 
 	private int mailCreated;
 
@@ -37,8 +43,9 @@ public class MailGenerator {
 		} else {
 			this.random = new Random();
 		}
-		// Vary arriving mail by +/-20%
-		MAIL_TO_CREATE = mailToCreate * 4 / 5 + random.nextInt(mailToCreate * 2 / 5);
+		// Vary arriving mail by MAIL_COUNT_VARIATION.
+		int variationCap = (int)(mailToCreate * MAIL_COUNT_VARIATION * 2);  // TODO check if that's 
+		MAIL_TO_CREATE = mailToCreate * 4 / 5 + random.nextInt(variationCap);
 		// System.out.println("Num Mail Items: "+MAIL_TO_CREATE);
 		mailCreated = 0;
 		complete = false;
@@ -54,7 +61,7 @@ public class MailGenerator {
 		int priority_level = generatePriorityLevel();
 		int arrival_time = generateArrivalTime();
 		// Check if arrival time has a priority mail
-		if ((random.nextInt(6) > 0) || // Skew towards non priority mail
+		if ((random.nextInt(PRIORITY_MAIL_RARITY) > 0) || // Skew towards non priority mail
 				(allMail.containsKey(arrival_time)
 						&& allMail.get(arrival_time).stream().anyMatch(e -> PriorityMailItem.class.isInstance(e)))) {
 			return new MailItem(dest_floor, arrival_time);

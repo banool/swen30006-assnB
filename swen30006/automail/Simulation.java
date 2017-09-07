@@ -4,7 +4,9 @@ import exceptions.ExcessiveDeliveryException;
 import exceptions.MailAlreadyDeliveredException;
 import strategies.Automail;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
@@ -15,32 +17,45 @@ import java.util.Properties;
 public class Simulation {
 
 	/** Constant for the mail generator */
-	private static final int MAIL_TO_CREATE = 60;
+	// TODO move this into MailGenerator.
+	private static int MAIL_TO_CREATE;
+	private static double DELIVERY_PENALTY;
+
+	// TODO comment this
+	public static final String DEFAULT_PROPERTIES = "automail.Properties";
 
 	private static ArrayList<MailItem> MAIL_DELIVERED;
 	private static double total_score = 0;
 
+	// TODO comment this.
+	public static Properties properties;
+
 	public static void main(String[] args) {
-		/*
-		 * // Should probably be using properties here Properties automailProperties =
-		 * new Properties(); // Defaults
-		 * automailProperties.setProperty("Name_of_Property", "20"); // Property value
-		 * may need to be converted from a string to the appropriate type
-		 * 
-		 * FileReader inStream = null;
-		 * 
-		 * try { inStream = new FileReader("automail.properties");
-		 * automailProperties.load(inStream); } finally { if (inStream != null) {
-		 * inStream.close(); } }
-		 * 
-		 * int i = Integer.parseInt(automailProperties.getProperty("Name_of_Property"));
-		 */
+		
+		// TODO comment. Reading in properties. TODO look into defaults.
+		properties = new Properties();
+		try {
+			readProperties();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("There was an error in reading in the properties");
+			System.exit(1);
+		}
+		
+		// TODO Move this to MailGenerator.
+		// Change the MailGenerator constructor to not take this as an argument.
+		MAIL_TO_CREATE =  
+		  Integer.parseInt(Simulation.properties.getProperty("Mail_to_Create"));
+		DELIVERY_PENALTY = 
+		  Double.parseDouble(Simulation.properties.getProperty("Delivery_Penalty"));
+		
 		MAIL_DELIVERED = new ArrayList<MailItem>();
 
 		/** Used to see whether a seed is initialized or not */
 		HashMap<Boolean, Integer> seedMap = new HashMap<>();
 
 		/** Read the first argument and save it as a seed if it exists */
+		// TODO change this to read the seed from automail.Properties maybe?
 		if (args.length != 0) {
 			int seed = Integer.parseInt(args[0]);
 			seedMap.put(true, seed);
@@ -48,6 +63,7 @@ public class Simulation {
 			seedMap.put(false, 0);
 		}
 		Automail automail = new Automail(new ReportDelivery());
+		// TODO change this constructor.
 		MailGenerator generator = new MailGenerator(MAIL_TO_CREATE, automail.mailPool, seedMap);
 
 		/** Initiate all the mail */
@@ -90,15 +106,26 @@ public class Simulation {
 
 	}
 
+	private static void readProperties() throws IOException {
+		FileReader inStream = null;
+		try {
+			inStream = new FileReader(DEFAULT_PROPERTIES);
+			properties.load(inStream);
+		} finally {
+			if (inStream != null) {
+				inStream.close();
+			}
+		}
+	}
+
 	private static double calculateDeliveryScore(MailItem deliveryItem) {
 		// Penalty for longer delivery times
-		final double penalty = 1.1;
 		double priority_weight = 0;
 		// Take (delivery time - arrivalTime)**penalty * (1+sqrt(priority_weight))
 		if (deliveryItem instanceof PriorityMailItem) {
 			priority_weight = ((PriorityMailItem) deliveryItem).getPriorityLevel();
 		}
-		return Math.pow(Clock.Time() - deliveryItem.getArrivalTime(), penalty) * (1 + Math.sqrt(priority_weight));
+		return Math.pow(Clock.Time() - deliveryItem.getArrivalTime(), DELIVERY_PENALTY) * (1 + Math.sqrt(priority_weight));
 	}
 
 	public static void printResults() {
