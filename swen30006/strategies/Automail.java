@@ -3,13 +3,14 @@ package strategies;
 import automail.IMailDelivery;
 import automail.Robot;
 import automail.Simulation;
+import exceptions.InvalidRobotBehaviourException;
 
 public class Automail {
 
 	public Robot robot;
 	public IMailPool mailPool;
 
-	public Automail(IMailDelivery delivery) {
+	public Automail(IMailDelivery delivery) throws InvalidRobotBehaviourException {
 		// Swap between simple provided strategies and your strategies here
 
 		/** Initialize the MailPool */
@@ -30,8 +31,7 @@ public class Automail {
 				robotBehaviour = new BigSimpleRobotBehaviour();
 				break;
 			default:
-				// TODO: Fix this up - add exeption
-				return;
+				throw new InvalidRobotBehaviourException(robotType);
 		}
 
 		/** Initialize robot */

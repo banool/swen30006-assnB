@@ -1,6 +1,7 @@
 package automail;
 
 import exceptions.ExcessiveDeliveryException;
+import exceptions.InvalidRobotBehaviourException;
 import exceptions.MailAlreadyDeliveredException;
 import strategies.Automail;
 import strategies.CommsRobotBehaviour;
@@ -57,7 +58,13 @@ public class Simulation {
 		} else {
 			seedMap.put(false, 0);
 		}
-		Automail automail = new Automail(new ReportDelivery());
+		Automail automail;
+		try {
+			automail = new Automail(new ReportDelivery());
+		} catch (InvalidRobotBehaviourException e) {
+			e.printStackTrace();
+			return;  // TODO why doesn't System.exit work here?
+		}
 		MailGenerator generator = new MailGenerator(automail.mailPool, seedMap);
 
 		/** Initiate all the mail */
