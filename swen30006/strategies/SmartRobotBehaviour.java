@@ -37,7 +37,7 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 			} else {
 				// Check if there is more than 1 priority arrival and the tube is
 				// currently at least half full.
-				if (super.getNewPriority() > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
+				if (getNewPriority() > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
 					return true;
 				} else {
 					return false;
