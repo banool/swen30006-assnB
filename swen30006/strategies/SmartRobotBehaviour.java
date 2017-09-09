@@ -9,12 +9,12 @@ import automail.PriorityMailItem;
 import automail.StorageTube;
 import exceptions.TubeFullException;
 
-public class SmartRobotBehaviour implements IRobotBehaviour {
+public class SmartRobotBehaviour extends CommsRobotBehaviour {
 
-	private int newPriorityArrival;
 
-	public SmartRobotBehaviour() {
-		newPriorityArrival = 0;
+
+	public SmartRobotBehaviour(int max_take) {
+		super(max_take);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 			} else {
 				// Check if there is more than 1 priority arrival and the tube is
 				// currently at least half full.
-				if (newPriorityArrival > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
+				if (super.getNewPriority() > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
 					return true;
 				} else {
 					return false;
@@ -49,13 +49,6 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 		}
 	}
 
-	@Override
-	public void priorityArrival(int priority) {
-		// Record that a new one has arrived
-		newPriorityArrival++;
-		System.out.println("T: " + Clock.Time() + " | Priority arrived");
-
-	}
 
 	@Override
 	public boolean fillStorageTube(IMailPool mailPool, StorageTube tube) {
@@ -96,7 +89,7 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 
 		// Check if there is anything in the tube
 		if (!tube.tube.isEmpty()) {
-			newPriorityArrival = 0;
+			setNewPriority(0);
 			return true;
 		}
 		return false;
@@ -121,5 +114,8 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 		}
 
 	}
+
+
+
 
 }

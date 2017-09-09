@@ -5,13 +5,13 @@ import automail.PriorityMailItem;
 import automail.StorageTube;
 import exceptions.TubeFullException;
 
-public class SimpleRobotBehaviour implements IRobotBehaviour {
+public class SimpleRobotBehaviour extends CommsRobotBehaviour {
 
-	private static final int MAX_TAKE = 4;
-	private boolean newPriority; // Used if we are notified that a priority item has arrived.
 
-	public SimpleRobotBehaviour() {
-		newPriority = false;
+
+
+	public SimpleRobotBehaviour(int max_take) {
+		super(max_take);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class SimpleRobotBehaviour implements IRobotBehaviour {
 		// and go
 		try {
 			// Start afresh
-			newPriority = false;
+			setNewPriority(0);
 			while (!tube.isEmpty()) {
 				mailPool.addToPool(tube.pop());
 			}
@@ -32,8 +32,8 @@ public class SimpleRobotBehaviour implements IRobotBehaviour {
 				// Go deliver that item
 				return true;
 			} else {
-				// Get as many nonpriority items as available or as fit
-				while (tube.getSize() < MAX_TAKE && mailPool.getNonPriorityPoolSize() > 0) {
+				// Get as many non-priority items as available or as fit
+				while (tube.getSize() < getMaxTake() && mailPool.getNonPriorityPoolSize() > 0) {
 					tube.addItem(mailPool.getNonPriorityMail());
 				}
 				return (tube.getSize() > 0);
@@ -44,22 +44,17 @@ public class SimpleRobotBehaviour implements IRobotBehaviour {
 		return false;
 	}
 
-	@Override
-	public void priorityArrival(int priority) {
-		// Record that a new one has arrived
-		newPriority = true;
-		System.out.println("T: " + Clock.Time() + " | Priority arrived");
-	}
 
 	@Override
 	public boolean returnToMailRoom(StorageTube tube) {
 		// Only return if we don't have a priority item and a new one came in
 		if (tube.getSize() > 0) {
 			Boolean priority = (tube.peek() instanceof PriorityMailItem);
-			return !priority && newPriority;
+			return !priority && (getNewPriority() != 0);
 		} else {
 			return false;
 		}
 	}
+
 
 }

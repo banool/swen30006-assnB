@@ -3,6 +3,7 @@ package automail;
 import exceptions.ExcessiveDeliveryException;
 import exceptions.MailAlreadyDeliveredException;
 import strategies.Automail;
+import strategies.CommsRobotBehaviour;
 
 import java.io.FileNotFoundException;  // TODO They maybe put this here for a reason.
 import java.io.FileReader;
@@ -66,7 +67,11 @@ public class Simulation {
 			// System.out.println("-- Step: "+Clock.Time());
 			priority = generator.step();
 			if (priority > 0)
-				automail.robot.behaviour.priorityArrival(priority);
+				System.out.println("T: " + Clock.Time() + " | Priority arrived");
+				if (automail.robot.behaviour instanceof CommsRobotBehaviour) {
+				    CommsRobotBehaviour comms_behaviour = (CommsRobotBehaviour) automail.robot.behaviour;
+                    comms_behaviour.priorityArrival(priority);
+                }
 			try {
 				automail.robot.step();
 			} catch (ExcessiveDeliveryException e) {
