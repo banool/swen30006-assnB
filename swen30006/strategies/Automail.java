@@ -15,7 +15,7 @@ public class Automail {
 		mailPool = new MailPool();
 
 		/** Initialize the RobotAction */
-		RobotBehaviour robotBehaviour = new SimpleRobotBehaviour();
+		RobotBehaviour robotBehaviour = new BigSimpleRobotBehaviour();
 
 		/** Initialize robot */
 		robot = new Robot(robotBehaviour, delivery, mailPool);
