@@ -27,6 +27,10 @@ public abstract class CommsRobotBehaviour extends RobotBehaviour {
         return newPriority;
     }
 
+    public boolean hasNewPriority() {
+        return (newPriority != 0);
+    }
+
 
     public void setNewPriority(int new_priority) {
         newPriority = new_priority;

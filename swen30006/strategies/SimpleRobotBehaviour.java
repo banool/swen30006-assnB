@@ -50,7 +50,7 @@ public class SimpleRobotBehaviour extends CommsRobotBehaviour {
 		// Only return if we don't have a priority item and a new one came in
 		if (tube.getSize() > 0) {
 			Boolean priority = (tube.peek() instanceof PriorityMailItem);
-			return !priority && (getNewPriority() != 0);
+			return !priority && hasNewPriority();
 		} else {
 			return false;
 		}

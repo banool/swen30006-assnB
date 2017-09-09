@@ -66,12 +66,13 @@ public class Simulation {
 		while (MAIL_DELIVERED.size() != generator.MAIL_TO_CREATE) {
 			// System.out.println("-- Step: "+Clock.Time());
 			priority = generator.step();
-			if (priority > 0)
-				System.out.println("T: " + Clock.Time() + " | Priority arrived");
-				if (automail.robot.behaviour instanceof CommsRobotBehaviour) {
-				    CommsRobotBehaviour comms_behaviour = (CommsRobotBehaviour) automail.robot.behaviour;
+			if (priority > 0) {
+                System.out.println("T: " + Clock.Time() + " | Priority arrived");
+                if (automail.robot.behaviour instanceof CommsRobotBehaviour) {
+                    CommsRobotBehaviour comms_behaviour = (CommsRobotBehaviour) automail.robot.behaviour;
                     comms_behaviour.priorityArrival(priority);
                 }
+            }
 			try {
 				automail.robot.step();
 			} catch (ExcessiveDeliveryException e) {
