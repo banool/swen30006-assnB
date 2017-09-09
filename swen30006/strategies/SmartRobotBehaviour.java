@@ -35,10 +35,9 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 			if (priorityCount >= nonPriorityCount) {
 				return false;
 			} else {
-				// Check if there is more than 1 priority arrival and the size of the tube is
-				// greater than or equal to half
+				// Check if there is more than 1 priority arrival and the tube is
+				// currently at least half full.
 				if (newPriorityArrival > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
-
 					return true;
 				} else {
 					return false;
@@ -83,7 +82,7 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 			}
 		}
 
-		// Sort tempTube based on floor
+		// Sort tempTube based on floor. TODO It is sorting based on arrival time???
 		tempTube.sort(new ArrivalComparer());
 
 		// Iterate through the tempTube
@@ -103,6 +102,7 @@ public class SmartRobotBehaviour implements IRobotBehaviour {
 		return false;
 	}
 
+	// TODO This is a bit weird right? Should this be in MailPool?
 	private boolean containMail(IMailPool m, String mailPoolIdentifier) {
 		if (mailPoolIdentifier.equals(MailPool.PRIORITY_POOL) && m.getPriorityPoolSize() > 0) {
 			return true;
