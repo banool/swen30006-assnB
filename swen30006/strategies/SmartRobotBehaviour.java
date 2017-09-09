@@ -11,10 +11,10 @@ import exceptions.TubeFullException;
 
 public class SmartRobotBehaviour extends CommsRobotBehaviour {
 
+	private static final int SMART_COMMS_ROBOT_MAX_TAKE = 4;
 
-
-	public SmartRobotBehaviour(int max_take) {
-		super(max_take);
+	public SmartRobotBehaviour() {
+		super(SMART_COMMS_ROBOT_MAX_TAKE);
 	}
 
 	@Override

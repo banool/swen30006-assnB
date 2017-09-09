@@ -6,12 +6,11 @@ import automail.StorageTube;
 import exceptions.TubeFullException;
 
 public class SimpleRobotBehaviour extends CommsRobotBehaviour {
-
-
-
-
-	public SimpleRobotBehaviour(int max_take) {
-		super(max_take);
+	
+	private static final int SIMPLE_COMMS_ROBOT_MAX_TAKE = 4;
+	
+	public SimpleRobotBehaviour() {
+		super(SIMPLE_COMMS_ROBOT_MAX_TAKE);
 	}
 
 	@Override

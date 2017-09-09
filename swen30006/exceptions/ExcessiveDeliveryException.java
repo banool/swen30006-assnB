@@ -5,7 +5,7 @@ package exceptions;
  * capacity without refilling.
  */
 public class ExcessiveDeliveryException extends Throwable {
-	public ExcessiveDeliveryException() {
-		super("Attempting to deliver more than 4 items in a single trip!!");
+	public ExcessiveDeliveryException(int max_take) {
+		super("Attempting to deliver more than " + max_take + " items in a single trip!!");
 	}
 }
