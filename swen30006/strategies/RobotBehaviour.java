@@ -2,6 +2,13 @@ package strategies;
 
 import automail.StorageTube;
 
+/**
+ * This is the most basic robot behaviour, encompassing behaviour
+ * and characteristics common to all behaviours. As such, only
+ * the size of the robot's tube is held here (as well as common
+ * methods regarding mail collection and delivery) where other
+ * capabilites can be added in appropriate subclasses.
+ */
 public abstract class RobotBehaviour {
 
     private final int MAX_TAKE;

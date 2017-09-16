@@ -11,7 +11,7 @@ public class Automail {
 	public IMailPool mailPool;
 
 	public Automail(IMailDelivery delivery) throws InvalidRobotBehaviourException {
-		// Swap between simple provided strategies and your strategies here
+		// Swap between simple provided strategies and your strategies here.
 
 		/** Initialize the MailPool */
 		mailPool = new MailPool();

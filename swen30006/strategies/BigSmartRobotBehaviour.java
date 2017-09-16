@@ -13,7 +13,6 @@ import exceptions.TubeFullException;
  * As such, the decision on when to return the mail room is simpler.
  * Filling the mail tube still uses smart behaviour however.
  * @author daniel
- *
  */
 public class BigSmartRobotBehaviour extends RobotBehaviour {
 
