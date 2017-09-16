@@ -11,7 +11,7 @@ import java.util.Stack;
 public class StorageTube {
 
 	public final int MAXIMUM_CAPACITY;
-	public Stack<MailItem> tube;
+	private Stack<MailItem> tube;
 
 	/**
 	 * Constructor for the storage tube
@@ -69,6 +69,10 @@ public class StorageTube {
 	 */
 	public MailItem pop() {
 		return tube.pop();
+	}
+
+	public Stack<MailItem> getTube() {
+		return tube;
 	}
 
 }

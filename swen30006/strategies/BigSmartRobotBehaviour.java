@@ -41,7 +41,7 @@ public class BigSmartRobotBehaviour extends RobotBehaviour {
 		ArrayList<MailItem> tempTube = new ArrayList<MailItem>();
 
 		// Empty my tube
-		while (!tube.tube.isEmpty()) {
+		while (!tube.isEmpty()) {
 			mailPool.addToPool(tube.pop());
 		}
 
@@ -73,7 +73,7 @@ public class BigSmartRobotBehaviour extends RobotBehaviour {
 		}
 
 		// Check if there is anything in the tube
-		if (!tube.tube.isEmpty()) {
+		if (!tube.isEmpty()) {
 			return true;
 		}
 		return false;

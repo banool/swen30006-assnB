@@ -8,11 +8,11 @@ import java.util.UUID;
 public class MailItem {
 
 	/** Represents the destination floor to which the mail is intended to go */
-	protected final int DESTINATION_FLOOR;
+	private final int DESTINATION_FLOOR;
 	/** The mail identifier */
-	protected final String ID;
+	private final String ID;
 	/** The time the mail item arrived */
-	protected final int ARRIVAL_TIME;
+	private final int ARRIVAL_TIME;
 
 	/**
 	 * Constructor for a MailItem

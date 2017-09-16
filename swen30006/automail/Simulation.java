@@ -20,24 +20,23 @@ public class Simulation {
 	/** Constant for the mail generator */
 	private static double DELIVERY_PENALTY;
 
-	// TODO comment this
+	/** The file from which we read the properties for this simulation. */
 	public static final String DEFAULT_PROPERTIES = "automail.Properties";
 
 	private static ArrayList<MailItem> MAIL_DELIVERED;
 	private static double total_score = 0;
 
-	// TODO comment this.
 	public static Properties properties;
 
 	public static void main(String[] args) {
 		
-		// TODO comment. Reading in properties. TODO look into defaults.
+		// Read in properties, catching appropriate exceptions.
 		properties = new Properties();
 		try {
 			readProperties();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("There was an error in reading in the properties");
+			System.err.println("There was an error reading in the properties.");
 			System.exit(1);
 		}
 		
@@ -62,7 +61,7 @@ public class Simulation {
 			automail = new Automail(new ReportDelivery());
 		} catch (InvalidRobotBehaviourException e) {
 			e.printStackTrace();
-			return;  // TODO why doesn't System.exit work here?
+			return;
 		}
 		MailGenerator generator = new MailGenerator(automail.mailPool, seedMap);
 

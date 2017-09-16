@@ -23,7 +23,7 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 			int priorityCount = 0;
 			int nonPriorityCount = 0;
 			// There has to be more priority than non-priority to keep going
-			for (MailItem m : tube.tube) {
+			for (MailItem m : tube.getTube()) {
 				if (m instanceof PriorityMailItem) {
 					priorityCount++;
 				} else {
@@ -55,7 +55,7 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 		ArrayList<MailItem> tempTube = new ArrayList<MailItem>();
 
 		// Empty my tube
-		while (!tube.tube.isEmpty()) {
+		while (!tube.isEmpty()) {
 			mailPool.addToPool(tube.pop());
 		}
 
@@ -87,7 +87,7 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 		}
 
 		// Check if there is anything in the tube
-		if (!tube.tube.isEmpty()) {
+		if (!tube.isEmpty()) {
 			setNewPriority(0);
 			return true;
 		}
