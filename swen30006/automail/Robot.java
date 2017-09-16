@@ -11,7 +11,7 @@ public class Robot {
 
 	StorageTube tube;
 	RobotBehaviour behaviour;
-	IMailDelivery delivery;
+	private IMailDelivery delivery;
 
 	/** Possible states the robot can be in */
 	public enum RobotState {
@@ -40,12 +40,11 @@ public class Robot {
 	 *            is the source of mail items
 	 */
 	public Robot(RobotBehaviour behaviour, IMailDelivery delivery, IMailPool mailPool) {
-		// current_state = RobotState.WAITING;
 		current_state = RobotState.RETURNING;
-		current_floor = Building.MAILROOM_LOCATION;
+		setCurrentFlloor(Building.MAILROOM_LOCATION);
 		this.behaviour = behaviour;
 		tube = new StorageTube(behaviour.getMaxTake());
-		this.delivery = delivery;
+		this.setDelivery(delivery);
 		this.mailPool = mailPool;
 		this.deliveryCounter = 0;
 	}
@@ -71,7 +70,7 @@ public class Robot {
 			 * If its current position is at the mailroom, then the robot should change
 			 * state
 			 */
-			if (current_floor == Building.MAILROOM_LOCATION) {
+			if (getCurrentFloor() == Building.MAILROOM_LOCATION) {
 				changeState(RobotState.WAITING);
 			} else {
 				/** If the robot is not at the mailroom floor yet, then move towards it! */
@@ -95,9 +94,9 @@ public class Robot {
 			break;
 		case DELIVERING:
 			/** Check whether or not the call to return is triggered manually **/
-			if (current_floor == destination_floor) { // If already here drop off item
+			if (getCurrentFloor() == getDestinationFloor()) { // If already here drop off item
 				/** Delivery complete, report this to the simulator! */
-				delivery.deliver(deliveryItem);
+				getDelivery().deliver(getDeliveryItem());
 				tube.pop();
 				deliveryCounter++;
 				if (deliveryCounter > this.behaviour.getMaxTake()) {
@@ -119,7 +118,7 @@ public class Robot {
 					changeState(RobotState.RETURNING);
 				} else {
 					/** The robot is not at the destination yet, move towards it! */
-					moveTowards(destination_floor);
+					moveTowards(getDestinationFloor());
 				}
 			}
 			break;
@@ -131,17 +130,17 @@ public class Robot {
 	 */
 	private void setRoute() {
 		/** Pop the item from the StorageUnit */
-		deliveryItem = tube.peek();
+		setDeliveryItem(tube.peek());
 		/** Set the destination floor */
-		destination_floor = deliveryItem.getDestFloor();
+		setDestinationFloor(getDeliveryItem().getDestFloor());
 	}
 
 	/** Generic function that moves the robot towards the destination */
-	private void moveTowards(int destination) {
-		if (current_floor < destination) {
-			current_floor++;
+	public void moveTowards(int destination) {
+		if (getCurrentFloor() < destination) {
+			setCurrentFlloor(getCurrentFloor() + 1);
 		} else {
-			current_floor--;
+			setCurrentFlloor(getCurrentFloor() - 1);
 		}
 	}
 
@@ -156,8 +155,64 @@ public class Robot {
 		}
 		current_state = nextState;
 		if (nextState == RobotState.DELIVERING) {
-			System.out.println("T: " + Clock.Time() + " | Deliver   " + deliveryItem.toString());
+			System.out.println("T: " + Clock.Time() + " | Deliver   " + getDeliveryItem().toString());
 		}
+	}
+
+	/**
+	 * @return the current_floor
+	 */
+	public int getCurrentFloor() {
+		return current_floor;
+	}
+
+	/**
+	 * @param current_floor the current_floor to set
+	 */
+	public void setCurrentFlloor(int current_floor) {
+		this.current_floor = current_floor;
+	}
+
+	/**
+	 * @return the destination_floor
+	 */
+	public int getDestinationFloor() {
+		return destination_floor;
+	}
+
+	/**
+	 * @param destination_floor the destination_floor to set
+	 */
+	public void setDestinationFloor(int destination_floor) {
+		this.destination_floor = destination_floor;
+	}
+
+	/**
+	 * @return the delivery
+	 */
+	public IMailDelivery getDelivery() {
+		return delivery;
+	}
+
+	/**
+	 * @param delivery the delivery to set
+	 */
+	public void setDelivery(IMailDelivery delivery) {
+		this.delivery = delivery;
+	}
+
+	/**
+	 * @return the deliveryItem
+	 */
+	public MailItem getDeliveryItem() {
+		return deliveryItem;
+	}
+
+	/**
+	 * @param deliveryItem the deliveryItem to set
+	 */
+	public void setDeliveryItem(MailItem deliveryItem) {
+		this.deliveryItem = deliveryItem;
 	}
 
 }
