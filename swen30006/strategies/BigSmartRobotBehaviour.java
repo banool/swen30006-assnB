@@ -3,50 +3,35 @@ package strategies;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import automail.Clock;
 import automail.MailItem;
-import automail.PriorityMailItem;
 import automail.StorageTube;
 import exceptions.TubeFullException;
 
-public class SmartRobotBehaviour extends CommsRobotBehaviour {
+/**
+ * The behaviour of the Big Smart robot is similar to the original
+ * Smart robot, though it cannot receive notifcations from the mail room.
+ * As such, the decision on when to return the mail room is simpler.
+ * Filling the mail tube still uses smart behaviour however.
+ * @author daniel
+ *
+ */
+public class BigSmartRobotBehaviour extends RobotBehaviour {
 
-	private static final int SMART_COMMS_ROBOT_MAX_TAKE = 4;
+	private static final int BIG_SMART_COMMS_ROBOT_MAX_TAKE = 6;
 
-	public SmartRobotBehaviour() {
-		super(SMART_COMMS_ROBOT_MAX_TAKE);
+	public BigSmartRobotBehaviour() {
+		super(BIG_SMART_COMMS_ROBOT_MAX_TAKE);
 	}
 
 	@Override
 	public boolean returnToMailRoom(StorageTube tube) {
-		// Check if my tube contains only priority items
+		// The original smart behaviour doesn't work here. Without being able to
+		// receive notifications from the mail room, the bot will enter an
+		// infinite loop when the bot's tube is less than half full.s
 		if (!tube.isEmpty()) {
-			int priorityCount = 0;
-			int nonPriorityCount = 0;
-			// There has to be more priority than non-priority to keep going
-			for (MailItem m : tube.tube) {
-				if (m instanceof PriorityMailItem) {
-					priorityCount++;
-				} else {
-					nonPriorityCount++;
-				}
-			}
-
-			if (priorityCount >= nonPriorityCount) {
-				return false;
-			} else {
-				// Check if there is more than 1 priority arrival and the tube is
-				// currently at least half full.
-				if (getNewPriority() > 1 && tube.getSize() >= tube.MAXIMUM_CAPACITY / 2) {
-					return true;
-				} else {
-					return false;
-				}
-
-			}
-		} else {
-			return true;
+			return false;
 		}
+		return true;
 	}
 
 
@@ -89,13 +74,11 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 
 		// Check if there is anything in the tube
 		if (!tube.tube.isEmpty()) {
-			setNewPriority(0);
 			return true;
 		}
 		return false;
 	}
 
-	// TODO This is a bit weird right? Should this be in MailPool?
 	private boolean containMail(IMailPool m, String mailPoolIdentifier) {
 		if (mailPoolIdentifier.equals(MailPool.PRIORITY_POOL) && m.getPriorityPoolSize() > 0) {
 			return true;

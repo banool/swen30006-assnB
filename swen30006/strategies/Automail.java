@@ -27,8 +27,8 @@ public class Automail {
 			case "Small_Comms_Smart":
 				robotBehaviour = new SimpleRobotBehaviour();
 				break;
-			case "Big_Simple":
-				robotBehaviour = new BigSimpleRobotBehaviour();
+			case "Big_Smart":
+				robotBehaviour = new BigSmartRobotBehaviour();
 				break;
 			default:
 				throw new InvalidRobotBehaviourException(robotType);
