@@ -6,7 +6,6 @@ import exceptions.MailAlreadyDeliveredException;
 import strategies.Automail;
 import strategies.CommsRobotBehaviour;
 
-import java.io.FileNotFoundException;  // TODO They maybe put this here for a reason.
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;

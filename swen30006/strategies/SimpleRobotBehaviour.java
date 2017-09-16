@@ -1,6 +1,5 @@
 package strategies;
 
-import automail.Clock;
 import automail.PriorityMailItem;
 import automail.StorageTube;
 import exceptions.TubeFullException;

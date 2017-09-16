@@ -1,7 +1,5 @@
 package strategies;
 
-import automail.Clock;
-
 /**
  * Created by David on 9/9/17.
  */

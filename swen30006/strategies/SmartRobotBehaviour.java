@@ -3,7 +3,6 @@ package strategies;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import automail.Clock;
 import automail.MailItem;
 import automail.PriorityMailItem;
 import automail.StorageTube;

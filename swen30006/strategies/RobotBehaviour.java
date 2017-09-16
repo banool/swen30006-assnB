@@ -1,6 +1,5 @@
 package strategies;
 
-import automail.Clock;
 import automail.StorageTube;
 
 public abstract class RobotBehaviour {
