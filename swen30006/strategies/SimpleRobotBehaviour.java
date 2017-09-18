@@ -13,11 +13,22 @@ public class SimpleRobotBehaviour extends CommsRobotBehaviour {
 	
 	/** The maximum number of items this robot can take (tube size). */
 	private static final int SIMPLE_COMMS_ROBOT_MAX_TAKE = 4;
-	
+
+    /**
+     * Constructor that sends the size of the storage tube to the super class' constructor.
+     */
 	public SimpleRobotBehaviour() {
 		super(SIMPLE_COMMS_ROBOT_MAX_TAKE);
 	}
 
+	/**
+     * This method fills the storage tube passed into it, with mail from the mail pool passed into it, if any.
+	 * @param mailPool
+	 *            used to put back or get mail.
+	 * @param tube
+	 *            refers to the pack the robot uses to deliver mail.
+	 * @return
+	 */
 	@Override
 	public boolean fillStorageTube(IMailPool mailPool, StorageTube tube) {
 		// Priority items are important;
@@ -49,6 +60,13 @@ public class SimpleRobotBehaviour extends CommsRobotBehaviour {
 	}
 
 
+    /**
+     * This method returns true if the robot's tube is empty, telling the robot to return to the mail room if this is
+     * true.
+     * @param tube
+     *            refers to the pack the robot uses to deliver mail.
+     * @return
+     */
 	@Override
 	public boolean returnToMailRoom(StorageTube tube) {
 		// Only return if we don't have a priority item and a new one came in

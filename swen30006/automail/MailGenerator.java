@@ -14,13 +14,16 @@ import strategies.IMailPool;
  */
 public class MailGenerator {
 
+	/* Indicates the base amount of mail to be generated */
 	private final int MAIL_TO_CREATE_BASE = 
 	  Integer.parseInt(Simulation.properties.getProperty("Mail_to_Create"));
-	
+
 	public final int MAIL_TO_CREATE;
-	
+
+	/* Indicates the rarity of priority mail items*/
 	private final int PRIORITY_MAIL_RARITY =
 	  Integer.parseInt(Simulation.properties.getProperty("Priority_Mail_is_One_in"));
+
 	// We convert the percentage value into a decimal representation.
 	private final double MAIL_COUNT_VARIATION =
 	  Double.parseDouble(Simulation.properties.getProperty("Mail_Count_Percentage_Variation")) / 100;
@@ -37,9 +40,7 @@ public class MailGenerator {
 
 	/**
 	 * Constructor for mail generation
-	 * 
-	 * @param mailToCreate
-	 *            roughly how many mail items to create
+	 *
 	 * @param mailPool
 	 *            where mail items go on arrival
 	 * @param seed
@@ -116,12 +117,12 @@ public class MailGenerator {
 		while (!complete) {
 			MailItem newMail = generateMail();
 			int timeToDeliver = newMail.getArrivalTime();
-			/** Check if key exists for this time **/
+			/* Check if key exists for this time **/
 			if (allMail.containsKey(timeToDeliver)) {
-				/** Add to existing array */
+				/* Add to existing array */
 				allMail.get(timeToDeliver).add(newMail);
 			} else {
-				/**
+				/*
 				 * If the key doesn't exist then set a new key along with the array of MailItems
 				 * to add during that time step.
 				 */
@@ -129,10 +130,10 @@ public class MailGenerator {
 				newMailList.add(newMail);
 				allMail.put(timeToDeliver, newMailList);
 			}
-			/** Mark the mail as created */
+			/* Mark the mail as created */
 			mailCreated++;
 
-			/** Once we have satisfied the amount of mail to create, we're done! */
+			/* Once we have satisfied the amount of mail to create, we're done! */
 			if (mailCreated == MAIL_TO_CREATE) {
 				complete = true;
 			}

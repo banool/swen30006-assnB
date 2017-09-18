@@ -18,9 +18,9 @@ public abstract class CommsRobotBehaviour extends RobotBehaviour {
 	private int newPriority;
 
 	/**
-	 * Constructor that passes the size of tube along to the super 
-	 * constructor and sets the current number of priority items to zero.
-	 * @param max_take
+	 * Constructor that passes the size of tube along to the super constructor and sets the current number of priority
+	 * items to zero.
+	 * @param max_take	The size of the tube
 	 */
 	public CommsRobotBehaviour(int max_take) {
 		super(max_take);
@@ -29,7 +29,7 @@ public abstract class CommsRobotBehaviour extends RobotBehaviour {
 
 	/**
 	 * Record that a new priority item has arrived.
-	 * @param priority
+	 * @param priority  Priority level of the new arrival
 	 */
 	public void priorityArrival(int priority) {
 		newPriority++;
@@ -47,7 +47,7 @@ public abstract class CommsRobotBehaviour extends RobotBehaviour {
 	 * Check whether there are any new priority items. 
 	 * This is useful for less intelligent behaviours that only care
 	 * about whether a new priority item has arrived, not how many.
-	 * @return
+	 * @return  boolean True if the newPriority attribute is not 0.
 	 */
 	public boolean hasNewPriority() {
 		return (newPriority != 0);
@@ -55,7 +55,7 @@ public abstract class CommsRobotBehaviour extends RobotBehaviour {
 
 	/**
 	 * Set the value of newPriority.
-	 * @param newPriority
+	 * @param newPriority   The new value to set this.newPriority to.
 	 */
 	public void setNewPriority(int newPriority) {
 		this.newPriority = newPriority;

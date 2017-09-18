@@ -22,12 +22,23 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 		super(SMART_COMMS_ROBOT_MAX_TAKE);
 	}
 
+    /**
+     * This method returns false if the robot's tube is not empty, and contains more priority items than non-priority
+     * items, and the tube is less than half full, otherwise returns true, indicating that the robot should return
+     * to the mailroom.
+     * @param tube
+     *            refers to the pack the robot uses to deliver mail.
+     * @return boolean
+     *            False if the above described circumstances are fulfilled, otherwise false.
+     */
 	@Override
 	public boolean returnToMailRoom(StorageTube tube) {
+
 		// Check if my tube contains only priority items
 		if (!tube.isEmpty()) {
 			int priorityCount = 0;
 			int nonPriorityCount = 0;
+
 			// There has to be more priority than non-priority to keep going
 			for (MailItem m : tube.getTube()) {
 				if (m instanceof PriorityMailItem) {
@@ -47,14 +58,25 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 				} else {
 					return false;
 				}
-
 			}
-		} else {
+
+		}
+		// If the tube is empty, the robot should return to the MailPool
+		else {
 			return true;
 		}
 	}
 
 
+    /**
+     * * This method fills the storage tube passed into it, with mail from the mail pool passed into it, if any.
+     * @param mailPool
+     *            used to put back or get mail.
+     * @param tube
+     *            refers to the pack the robot uses to deliver mail.
+     * @return boolean
+     *            true if the tube was filled with any mail items, otherwise false.
+     */
 	@Override
 	public boolean fillStorageTube(IMailPool mailPool, StorageTube tube) {
 
@@ -100,7 +122,12 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 		return false;
 	}
 
-	// TODO This is a bit weird right? Should this be in MailPool?
+	/**
+	 * A method that indicates whether or not the indicated mail pool contains any mail.
+	 * @param m                     A MailPool instance implementing the IMailPool interface.
+	 * @param mailPoolIdentifier    A String indicating which type mailpool the caller of the method is checking.
+	 * @return  boolean             True if the indicated mailpool is not empty.
+	 */
 	private boolean containMail(IMailPool m, String mailPoolIdentifier) {
 		if (mailPoolIdentifier.equals(MailPool.PRIORITY_POOL) && m.getPriorityPoolSize() > 0) {
 			return true;
@@ -111,6 +138,9 @@ public class SmartRobotBehaviour extends CommsRobotBehaviour {
 		}
 	}
 
+    /**
+     * A simple comparator class used to sort the robot's storage tube.
+     */
 	private class ArrivalComparer implements Comparator<MailItem> {
 		@Override
 		public int compare(MailItem m1, MailItem m2) {

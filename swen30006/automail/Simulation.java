@@ -34,6 +34,10 @@ public class Simulation {
 	/** Public so other classes can read the required values from it. */
 	public static Properties properties;
 
+    /**
+     *  Main method that manages the
+     * @param args
+     */
 	public static void main(String[] args) {
 		
 		// Read in properties, catching appropriate exceptions.
@@ -77,6 +81,7 @@ public class Simulation {
 		while (MAIL_DELIVERED.size() != generator.MAIL_TO_CREATE) {
 			// System.out.println("-- Step: "+Clock.Time());
 			priority = generator.step();
+			// If the mail is a PriorityMailItem
 			if (priority > 0) {
                 System.out.println("T: " + Clock.Time() + " | Priority arrived");
                 if (automail.robot.behaviour instanceof CommsRobotBehaviour) {
@@ -96,16 +101,23 @@ public class Simulation {
 		printResults();
 	}
 
+
+	/**
+	 * Given to the Robot's constructor to report on the delivery of mail items.
+	 */
 	static class ReportDelivery implements IMailDelivery {
 
 		/** Confirm the delivery and calculate the total score */
 		public void deliver(MailItem deliveryItem) {
+			// If the delivery item has not yet been delivered
 			if (!MAIL_DELIVERED.contains(deliveryItem)) {
 				System.out.println("T: " + Clock.Time() + " | Delivered " + deliveryItem.toString());
 				MAIL_DELIVERED.add(deliveryItem);
 				// Calculate delivery score
 				total_score += calculateDeliveryScore(deliveryItem);
-			} else {
+			}
+			// If it has already been delivered, this is an error; throw an exception.
+			else {
 				try {
 					throw new MailAlreadyDeliveredException();
 				} catch (MailAlreadyDeliveredException e) {
@@ -133,6 +145,11 @@ public class Simulation {
 		}
 	}
 
+	/**
+	 * A method that calculates the delivery score of the given delivery item.
+	 * @param deliveryItem	A MailItem, for which a delivery score will be calculated.
+	 * @return double 		The score, as described above.
+	 */
 	private static double calculateDeliveryScore(MailItem deliveryItem) {
 		// Penalty for longer delivery times
 		double priority_weight = 0;
@@ -143,6 +160,9 @@ public class Simulation {
 		return Math.pow(Clock.Time() - deliveryItem.getArrivalTime(), DELIVERY_PENALTY) * (1 + Math.sqrt(priority_weight));
 	}
 
+	/**
+	 * Prints the results of the simulation.
+	 */
 	public static void printResults() {
 		System.out.println("T: " + Clock.Time() + " | Simulation complete!");
 		System.out.println("Final Delivery time: " + Clock.Time());

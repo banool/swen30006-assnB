@@ -33,21 +33,22 @@ public class MailItem {
 		this.ARRIVAL_TIME = arrival_time;
 	}
 
+	/**
+	 * @return  Returns a string representation fo the mail item, in a format ideal for reporting the simulation.
+	 */
 	@Override
 	public String toString() {
 		return "Mail Item: " + "| ID: " + ID + "| Destination: " + DESTINATION_FLOOR + "| Arrival: " + ARRIVAL_TIME;
 	}
 
 	/**
-	 *
-	 * @return the destination floor of the mail item
+	 * @return the destination floor of the mail item.
 	 */
 	public int getDestFloor() {
 		return DESTINATION_FLOOR;
 	}
 
 	/**
-	 *
 	 * @return the ID of the mail item
 	 */
 	public String getId() {
@@ -55,7 +56,6 @@ public class MailItem {
 	}
 
 	/**
-	 *
 	 * @return the arrival time of the mail item
 	 */
 	public int getArrivalTime() {

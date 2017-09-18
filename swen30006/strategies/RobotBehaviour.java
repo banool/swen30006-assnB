@@ -19,7 +19,7 @@ public abstract class RobotBehaviour {
     private final int MAX_TAKE;
 
     /**
-     * Sets the value of MAX_TAKE to the value passed into the constructor.
+     * Constructor that sets the value of MAX_TAKE to the value passed into the constructor.
      * @param max_take
      */
     public RobotBehaviour(int max_take) {
@@ -46,8 +46,8 @@ public abstract class RobotBehaviour {
 
 
     /**
-     * Returns the value of MAX_TAKE.
-     * @return
+     * Getter method that returns the value of MAX_TAKE.
+     * @return integer MAX_TAKE, representing the size of the robot's StorageTube.
      */
     public int getMaxTake() {
         return MAX_TAKE;

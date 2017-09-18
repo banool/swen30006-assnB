@@ -15,13 +15,21 @@ public class Automail {
 	public Robot robot;
 	public IMailPool mailPool;
 
+	/**
+	 * Constructor, throws an InvalidRobotBehaviour exception, implementing the Strategy pattern, initialising a robot
+     * based on the configuration file.
+	 * @param delivery
+     *                  A class used by the Robot constructor to report when the robot delivers the mail items.
+	 * @throws InvalidRobotBehaviourException
+     *                  An exception class used to throw an exception when the specified robot behaviour is not defined.
+	 */
 	public Automail(IMailDelivery delivery) throws InvalidRobotBehaviourException {
 		// Swap between simple provided strategies and your strategies here.
 
-		/** Initialize the MailPool */
+		/* Initialize the MailPool */
 		mailPool = new MailPool();
 
-		/** Initialize the RobotAction */
+		/* Initialize the RobotAction */
 		String robotType = Simulation.properties.getProperty("Robot_Type");
 		RobotBehaviour robotBehaviour;
 
@@ -39,7 +47,7 @@ public class Automail {
 				throw new InvalidRobotBehaviourException(robotType);
 		}
 
-		/** Initialize robot */
+		/* Initialize robot */
 		robot = new Robot(robotBehaviour, delivery, mailPool);
 
 	}

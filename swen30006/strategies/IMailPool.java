@@ -10,9 +10,7 @@ import automail.MailItem;
 /**
  * A MailPool is called from MailGenerator during a certain time step i.e. when
  * t = 3 if there is mail to be delivered, addToPool will be called which adds a
- * MailItem to the MailPool. The data structure in the MailPool is determined by
- * your implementation.
- * 
+ * MailItem to the MailPool.
  */
 public interface IMailPool {
 
@@ -46,16 +44,8 @@ public interface IMailPool {
 	public MailItem getHighestPriorityMail();
 
 	/**
-	 * You are _not_ required to use this method or provide a implementation
-	 * different to our simple example. You may wish to, however, if you are trying
-	 * to get a particularly low (good) delivery score.
-	 * 
 	 * This method treats nonPriority items as priority 0, i.e. lowest priority, and
 	 * so can return either priority or nonPriority items.
-	 * 
-	 * You can access information about the Building via its static attributes e.g.
-	 * Building.FLOORS will return you the total number of floors in that building
-	 * Read the docs for more information
 	 * 
 	 * @param FloorFrom
 	 *            the lowest floor in the range to consider
@@ -63,7 +53,6 @@ public interface IMailPool {
 	 *            the highest floor in the range to consider
 	 * @return a mailItem going to a floor in the specified range: this mail item is
 	 *         the highest priority item which arrived first.
-	 * 
 	 */
 	public MailItem getBestMail(int FloorFrom, int FloorTo);
 

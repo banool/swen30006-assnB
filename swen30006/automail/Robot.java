@@ -152,7 +152,7 @@ public class Robot {
 	/**
 	 * Prints out the change in state
 	 * 
-	 * @param nextState
+	 * @param nextState Indicates the next state of the robot, to which its state will be changed.
 	 */
 	private void changeState(RobotState nextState) {
 		if (current_state != nextState) {
