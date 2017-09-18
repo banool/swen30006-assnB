@@ -47,13 +47,13 @@ public class MailGenerator {
 	 */
 	public MailGenerator(IMailPool mailPool, HashMap<Boolean, Integer> seed) {
 		if (seed.containsKey(true)) {
-			this.random = new Random((long) seed.get(true));
+			this.RANDOM = new Random((long) seed.get(true));
 		} else {
-			this.random = new Random();
+			this.RANDOM = new Random();
 		}
 		// Vary arriving mail by MAIL_COUNT_VARIATION.
 		int variationCap = (int)(MAIL_TO_CREATE_BASE * MAIL_COUNT_VARIATION * 2);  // TODO check if this is correct
-		MAIL_TO_CREATE = MAIL_TO_CREATE_BASE * 4 / 5 + random.nextInt(variationCap);
+		MAIL_TO_CREATE = MAIL_TO_CREATE_BASE * 4 / 5 + RANDOM.nextInt(variationCap);
 		// System.out.println("Num Mail Items: "+MAIL_TO_CREATE);
 		mailCreated = 0;
 		complete = false;
@@ -69,7 +69,7 @@ public class MailGenerator {
 		int priority_level = generatePriorityLevel();
 		int arrival_time = generateArrivalTime();
 		// Check if arrival time has a priority mail
-		if ((random.nextInt(PRIORITY_MAIL_RARITY) > 0) || // Skew towards non priority mail
+		if ((RANDOM.nextInt(PRIORITY_MAIL_RARITY) > 0) || // Skew towards non priority mail
 				(allMail.containsKey(arrival_time)
 						&& allMail.get(arrival_time).stream().anyMatch(e -> PriorityMailItem.class.isInstance(e)))) {
 			return new MailItem(dest_floor, arrival_time);
@@ -82,21 +82,21 @@ public class MailGenerator {
 	 * @return a destination floor between the ranges of GROUND_FLOOR to FLOOR
 	 */
 	private int generateDestinationFloor() {
-		return Building.LOWEST_FLOOR + random.nextInt(Building.FLOORS);
+		return Building.LOWEST_FLOOR + RANDOM.nextInt(Building.FLOORS);
 	}
 
 	/**
 	 * @return a random priority level selected from 1 - 100
 	 */
 	private int generatePriorityLevel() {
-		return 1 + random.nextInt(100);
+		return 1 + RANDOM.nextInt(100);
 	}
 
 	/**
 	 * @return a random arrival time before the last delivery time
 	 */
 	private int generateArrivalTime() {
-		return 1 + random.nextInt(Clock.LAST_DELIVERY_TIME);
+		return 1 + RANDOM.nextInt(Clock.LAST_DELIVERY_TIME);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class MailGenerator {
 	 *            of objects
 	 */
 	private Object getRandom(Object[] array) {
-		return array[random.nextInt(array.length)];
+		return array[RANDOM.nextInt(array.length)];
 	}
 
 	/**
