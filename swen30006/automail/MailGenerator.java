@@ -27,7 +27,7 @@ public class MailGenerator {
 
 	private int mailCreated;
 
-	private final Random random;
+	private final Random RANDOM;
 	/** This seed is used to make the behaviour deterministic */
 
 	private boolean complete;
