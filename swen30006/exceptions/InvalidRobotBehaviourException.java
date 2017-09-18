@@ -5,6 +5,7 @@ package exceptions;
  * does not exist.
  */
 public class InvalidRobotBehaviourException extends Throwable {
+	
 	public InvalidRobotBehaviourException(String robotString) {
 		super(robotString + " is not a valid robot behaviour type.");
 	}

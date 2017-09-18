@@ -10,6 +10,7 @@ import exceptions.TubeFullException;
 
 public class SmartRobotBehaviour extends CommsRobotBehaviour {
 
+	/** The maximum number of items this robot can take (tube size). */
 	private static final int SMART_COMMS_ROBOT_MAX_TAKE = 4;
 
 	public SmartRobotBehaviour() {

@@ -13,9 +13,9 @@ public abstract class RobotBehaviour {
 
     private final int MAX_TAKE;
 
-
     /**
-     *
+     * Sets the value of MAX_TAKE to the value passed into the constructor.
+     * @param max_take
      */
     public RobotBehaviour(int max_take) {
         this.MAX_TAKE = max_take;
@@ -41,7 +41,7 @@ public abstract class RobotBehaviour {
 
 
     /**
-     *
+     * Returns the value of MAX_TAKE.
      * @return
      */
     public int getMaxTake() {

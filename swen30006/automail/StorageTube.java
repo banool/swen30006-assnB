@@ -9,6 +9,7 @@ import java.util.Stack;
  */
 public class StorageTube {
 
+	// Public is okay here since this is a constant.
 	public final int MAXIMUM_CAPACITY;
 	private Stack<MailItem> tube;
 

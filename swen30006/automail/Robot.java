@@ -11,6 +11,7 @@ public class Robot {
 
 	private StorageTube tube;
 	private IMailDelivery delivery;
+	/* Behaviour has to be default visibility for Simulation. */
 	RobotBehaviour behaviour;
 
 	/** Possible states the robot can be in */
@@ -24,7 +25,6 @@ public class Robot {
 	private IMailPool mailPool;
 
 	private MailItem deliveryItem;
-
 	private int deliveryCounter;
 
 	/**
@@ -40,7 +40,6 @@ public class Robot {
 	 *            is the source of mail items
 	 */
 	public Robot(RobotBehaviour behaviour, IMailDelivery delivery, IMailPool mailPool) {
-		// current_state = RobotState.WAITING;
 		current_state = RobotState.RETURNING;
 		current_floor = Building.MAILROOM_LOCATION;
 		this.behaviour = behaviour;

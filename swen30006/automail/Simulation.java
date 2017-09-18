@@ -26,6 +26,7 @@ public class Simulation {
 	private static ArrayList<MailItem> MAIL_DELIVERED;
 	private static double total_score = 0;
 
+	/** Public so other classes can read the required values from it. */
 	public static Properties properties;
 
 	public static void main(String[] args) {
@@ -110,6 +111,11 @@ public class Simulation {
 
 	}
 
+	/**
+	 * Reads the properties file using the .load() method of the
+	 * previously instantiated properties object.
+	 * @throws IOException
+	 */
 	private static void readProperties() throws IOException {
 		FileReader inStream = null;
 		try {

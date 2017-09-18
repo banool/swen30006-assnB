@@ -16,6 +16,7 @@ import exceptions.TubeFullException;
  */
 public class BigSmartRobotBehaviour extends RobotBehaviour {
 
+	/** The maximum number of items this robot can take (tube size). */
 	private static final int BIG_SMART_COMMS_ROBOT_MAX_TAKE = 6;
 
 	public BigSmartRobotBehaviour() {
@@ -78,6 +79,12 @@ public class BigSmartRobotBehaviour extends RobotBehaviour {
 		return false;
 	}
 
+	/**
+	 * Returns true if the given mail pool has items, false otherwise.
+	 * @param m
+	 * @param mailPoolIdentifier
+	 * @return
+	 */
 	private boolean containMail(IMailPool m, String mailPoolIdentifier) {
 		if (mailPoolIdentifier.equals(MailPool.PRIORITY_POOL) && m.getPriorityPoolSize() > 0) {
 			return true;
