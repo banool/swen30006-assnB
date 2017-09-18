@@ -1,3 +1,8 @@
+/*
+ * Group number: 17
+ * Daniel Porteous (696965), David Stern (585870), Hao Le (695540)
+ */
+
 package automail;
 
 public class Building {
