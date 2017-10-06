@@ -1,5 +1,6 @@
 # My stuff
 Part B.zip
+.DS_Store
 
 # Copied from https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
 .metadata
